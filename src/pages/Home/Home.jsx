@@ -1,13 +1,24 @@
+import { useState, useEffect } from 'react';
+import { toast } from 'react-toastify';
 import { fetchTrendingMovies } from 'services/movie-api';
+import { MoviesList } from 'components/MoviesList/MoviesList';
 
 const Home = () => {
-  const response = fetchTrendingMovies();
+  const [movies, setMovies] = useState([]);
 
-  console.log(response);
+  useEffect(() => {
+    fetchTrendingMovies()
+      .then(({ data }) => {
+        const trendingMovies = data.results;
+        setMovies(trendingMovies);
+      })
+      .catch(error => toast.error(error.message));
+  }, []);
 
   return (
     <main>
-      <h1>Trending today</h1>;
+      <h1>Trending today</h1>
+      <MoviesList movies={movies} />
     </main>
   );
 };
