@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import { toast } from 'react-toastify';
 import css from './SearchForm.module.css';
 
@@ -36,4 +37,8 @@ export const SearchForm = ({ onSubmit }) => {
       </button>
     </form>
   );
+};
+
+SearchForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
 };

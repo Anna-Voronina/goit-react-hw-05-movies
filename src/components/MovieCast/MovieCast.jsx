@@ -20,22 +20,28 @@ const MovieCast = () => {
   }, [movieId]);
 
   return (
-    <ul className={css.movieCastList}>
-      {movieCast.map(({ id, name, profile_path, character }) => (
-        <li className={css.movieCastListItem} key={id}>
-          <img
-            src={
-              profile_path
-                ? `https://image.tmdb.org/t/p/w500/${profile_path}`
-                : `${defaultProfileImg}`
-            }
-            alt={name}
-          />
-          <h3>{name}</h3>
-          <p>{`Character: ${character}`}</p>
-        </li>
-      ))}
-    </ul>
+    <>
+      {movieCast.length === 0 ? (
+        <h3>We don't have any information about the cast of this movie.</h3>
+      ) : (
+        <ul className={css.movieCastList}>
+          {movieCast.map(({ id, name, profile_path, character }) => (
+            <li className={css.movieCastListItem} key={id}>
+              <img
+                src={
+                  profile_path
+                    ? `https://image.tmdb.org/t/p/w500/${profile_path}`
+                    : `${defaultProfileImg}`
+                }
+                alt={name}
+              />
+              <h3>{name}</h3>
+              <p>{`Character: ${character}`}</p>
+            </li>
+          ))}
+        </ul>
+      )}
+    </>
   );
 };
 

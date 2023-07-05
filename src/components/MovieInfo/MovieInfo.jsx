@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { formatDateToYear } from 'services/format-date';
 import defaultPoster from './../../images/no-poster-available.jpg';
 import css from './MovieInfo.module.css';
@@ -39,4 +40,20 @@ export const MovieInfo = ({ movie }) => {
       </div>
     </div>
   );
+};
+
+MovieInfo.propTypes = {
+  movie: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    genres: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number,
+        name: PropTypes.string,
+      }).isRequired
+    ).isRequired,
+    poster_path: PropTypes.string.isRequired,
+    overview: PropTypes.string.isRequired,
+    release_date: PropTypes.string.isRequired,
+    vote_average: PropTypes.number.isRequired,
+  }).isRequired,
 };
