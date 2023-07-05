@@ -44,3 +44,14 @@ export const fetchMovieReviews = async movieId => {
 
   return response;
 };
+
+export const fetchMoviesByQuery = async query => {
+  const response = await movieAPI.get('/search/movie', {
+    params: {
+      api_key: API_KEY,
+      query,
+    },
+  });
+
+  return response;
+};

@@ -1,5 +1,6 @@
 import { formatDateToYear } from 'services/format-date';
 import defaultPoster from './../../images/no-poster-available.jpg';
+import css from './MovieInfo.module.css';
 
 export const MovieInfo = ({ movie }) => {
   const { title, genres, poster_path, overview, release_date, vote_average } =
@@ -14,7 +15,7 @@ export const MovieInfo = ({ movie }) => {
   const userScorePercentage = countUserScorePercentage(vote_average);
 
   return (
-    <div>
+    <div className={css.movieDescWrapper}>
       <img
         src={
           poster_path
@@ -22,14 +23,15 @@ export const MovieInfo = ({ movie }) => {
             : `${defaultPoster}`
         }
         alt={title}
+        width="300"
       />
-      <div>
+      <div className={css.movieInfo}>
         <h1>{`${title} (${releaseYear})`}</h1>
         <p>{`User score: ${userScorePercentage}%`}</p>
         <h2>Overview</h2>
         <p>{overview}</p>
         <h3>Genres</h3>
-        <ul>
+        <ul className={css.movieGenresList}>
           {genres.map(({ id, name }) => (
             <li key={id}>{name}</li>
           ))}

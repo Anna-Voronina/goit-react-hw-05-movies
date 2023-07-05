@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { fetchMovieReviews } from 'services/movie-api';
+import css from './MovieReviews.module.css';
 
 const MovieReviews = () => {
   const [movieReviews, setMovieReviews] = useState([]);
@@ -22,9 +23,9 @@ const MovieReviews = () => {
       {movieReviews.length === 0 ? (
         <h3>We don't have any reviews for this movie.</h3>
       ) : (
-        <ul>
+        <ul className={css.movieReviewsList}>
           {movieReviews.map(({ id, author, content }) => (
-            <li key={id}>
+            <li className={css.movieReviewsListItem} key={id}>
               <h3>{`Author: ${author}`}</h3>
               <p>{content}</p>
             </li>

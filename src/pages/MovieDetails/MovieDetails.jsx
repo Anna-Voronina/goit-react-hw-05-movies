@@ -1,9 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense, useRef } from 'react';
 import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { fetchMovieDetails } from 'services/movie-api';
 import { MovieInfo } from 'components/MovieInfo/MovieInfo';
 import { CgArrowLeft } from 'react-icons/cg';
+import { Loader } from 'components/Loader/Loader';
+import css from './MovieDetails.module.css';
 
 const MovieDetails = () => {
   const links = [
@@ -15,7 +17,9 @@ const MovieDetails = () => {
   const { movieId } = useParams();
   const location = useLocation();
 
-  const backLinkLocation = location?.state?.from || '/';
+  const locationRef = useRef(location?.state?.from);
+
+  const backLinkLocation = locationRef?.current || '/';
 
   useEffect(() => {
     fetchMovieDetails(movieId)
@@ -29,24 +33,28 @@ const MovieDetails = () => {
   if (!movie) return;
 
   return (
-    <main>
-      <button type="button">
-        <Link to={backLinkLocation}>
+    <>
+      <button className={css.goBackBtn} type="button">
+        <Link className={css.goBackBtnLink} to={backLinkLocation}>
           <CgArrowLeft />
-          <span>Go back</span>
+          <span className={css.goBackBtnText}>Go back</span>
         </Link>
       </button>
       <MovieInfo movie={movie} />
-      <h3>Additional information</h3>
-      <ul>
+      <h3 className={css.title}>Additional information</h3>
+      <ul className={css.detailsList}>
         {links.map(({ path, title }) => (
-          <li key={path}>
-            <Link to={path}>{title}</Link>
+          <li className={css.detailsListItem} key={path}>
+            <Link className={css.detailsListLink} to={path}>
+              {title}
+            </Link>
           </li>
         ))}
       </ul>
-      <Outlet />
-    </main>
+      <Suspense fallback={<Loader />}>
+        <Outlet />
+      </Suspense>
+    </>
   );
 };
 

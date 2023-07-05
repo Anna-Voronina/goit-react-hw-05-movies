@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { fetchMovieCast } from 'services/movie-api';
 import defaultProfileImg from './../../images/default-profile-image.png';
+import css from './MovieCast.module.css';
 
 const MovieCast = () => {
   const [movieCast, setMovieCast] = useState([]);
@@ -19,9 +20,9 @@ const MovieCast = () => {
   }, [movieId]);
 
   return (
-    <ul>
+    <ul className={css.movieCastList}>
       {movieCast.map(({ id, name, profile_path, character }) => (
-        <li key={id}>
+        <li className={css.movieCastListItem} key={id}>
           <img
             src={
               profile_path
